@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        
+        <meta http-equiv="Content-Security-Policy"
+          content="default-src *;
+               script-src 'self' 'unsafe-inline' 'unsafe-eval'
+                           127.0.0.1:*
+                           http://*.google.com
+                           http://*.gstatic.com
+                           http://*.googleapis.com
+                           http://*.firebaseio.com
+                           https://*.google.com
+                           https://*.gstatic.com
+                           https://*.googleapis.com
+                           https://*.firebaseio.com
+                           ;
+               style-src  'self' 'unsafe-inline'
+                          127.0.0.1
+                           http://*.google.com
+                           http://*.gstatic.com
+                           http://*.googleapis.com
+                           http://*.firebaseio.com
+                           https://*.google.com
+                           https://*.gstatic.com
+                           https://*.googleapis.com
+                           https://*.firebaseio.com
+">
+
+
+
+
+        
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       <script src="/js/index.js" type="text/javascript"></script>
+        <title>Smart Carpool</title>
+
+        
+    </head>
+
+    <body>
+    <div class="view">
+
+
+
+
+
+
+
+<div id="mySidenav" class="sidenav">
+  <ul id="menu-v">
+    <li><a href="Home.html">Home</a>
+    </li><br>
+    <li><a href="Account.html">Account</a>
+    </li><br>
+    
+
+    <li><a href="Green.html">Go Green!</a>
+    </li><br>
+    <li><a href="Book.html">Book Now!</a>
+    </li><br>
+
+    <li><a href="Driver.html">Want to be a driver?</a>
+    </li><br>
+
+<li><a href="" id="exit">Exit</a>
+    </li><br>
+        </ul>
+
+</div>
+<div id="menudiv">
+<!-- Use any element to open the sidenav -->
+<span id="sidemenu">Menu</span>
+</div>
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+
+
+    <div class="accountinfo" style="margin-left: 108px;
+    margin-top: 34px;">
+        <span id="returndata" ></span> 
+        <span id="greendata" style="font-size: initial;
+    color: red;"></span>  
+                  
+    </div>
+</body>
+
+<script type="text/javascript">
+window.onload=function()
+{
+
+var email = localStorage.getItem('email');
+if (email == null)
+ {   email = "guest";
+document.getElementById("returndata").innerHTML = "Please Login In!";
+}
+
+
+    var url         = "http://localhost/carpool/green.php";
+    var xmlhttp     = new XMLHttpRequest();
+    xmlhttp.onload = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+           var jsondata = xmlhttp.responseText;
+           var res = jsondata.split(":");
+           console.log(res);
+           if((res[1] == '0 results')||(email == "guest"))
+                document.getElementById("returndata").innerHTML = "Please Login in";
+            else
+            {
+                      var str1  = "Email ID:"+res[2]+"<br><br>";
+                      var i = 3;
+                      var j = 1;
+                      var miles = 0;
+                      var str2 = " ";
+                      var k = 6;
+                      var countmiles = 0;
+                      
+                      while(typeof res[k] != "undefined"){
+                        var countmiles = countmiles +parseInt(res[k]);
+                        k = k+6;
+                       
+                      }
+                      
+                      if(countmiles == " 0")
+                              str2 = "Go ahead and book a ride and saving!!";
+                        else
+                        {
+                               while(res[i])
+                              {
+                                  str2  = str2.concat("<br>"+j+". "+res[i]+" "+res[i+1]+" "+res[i+2]+ " "+res[i+3]+"<br>");
+                                  
+                                  i = i+6;
+                                  j = j+1;
+
+                              }
+                         
+                              
+                             //console.log(xmlhttp.responseText);
+                             var saved = (((countmiles*18.5)/462.5)*2.34);
+                             var d = saved.toPrecision(4);
+                             console.log(miles);
+                             console.log(saved);
+                              document.getElementById("greendata").innerHTML ="<br><br><b>Congartulations, you have saved "+d+" $!!!</b>";
+                        }
+
+                        document.getElementById("returndata").innerHTML = str1+ " "+str2;
+              }
+            }
+    };
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+    xmlhttp.send("email="+email);
+
+
+
+    var el = document.getElementById('sidemenu');
+    if(el){
+        el.addEventListener('click', openNav, false);
+        }
+
+    var le = document.getElementById('exit');
+    if(le){
+        le.addEventListener('click', closeNav, false);
+        }
+
+    
+
+
+
+}
+
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+    document.body.style.backgroundColor = "white";
+}
+
+
+</script>
+
+
+
+    
+</html>

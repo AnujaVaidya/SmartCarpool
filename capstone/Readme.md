@@ -1,0 +1,1 @@
+This is the folder to be put in htdocs of XAMPP of your local server or any other folder depending on what you install it in.

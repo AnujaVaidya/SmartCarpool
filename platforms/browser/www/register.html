@@ -1,0 +1,196 @@
+ <!DOCTYPE html>
+<html>
+   <head>
+
+      
+        <meta http-equiv="Content-Security-Policy"
+          content="default-src *;
+               script-src 'self' 'unsafe-inline' 'unsafe-eval'
+                           127.0.0.1:*
+                           http://*.google.com
+                           http://*.gstatic.com
+                           http://*.googleapis.com
+                           http://*.firebaseio.com
+                           https://*.google.com
+                           https://*.gstatic.com
+                           https://*.googleapis.com
+                           https://*.firebaseio.com
+                           https://maxcdn.bootstrapcdn.com
+                           ;
+               style-src  'self' 'unsafe-inline'
+                          127.0.0.1
+                           http://*.google.com
+                           http://*.gstatic.com
+                           http://*.googleapis.com
+                           http://*.firebaseio.com
+                           https://*.google.com
+                           https://*.gstatic.com
+                           https://*.googleapis.com
+                           https://*.firebaseio.com
+                           https://maxcdn.bootstrapcdn.com
+">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       <script src="/js/index.js" type="text/javascript"></script>
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+        <title>Smart Carpool</title>
+
+        
+    </head>
+
+    <body>
+    <div class="view">
+
+
+
+
+
+
+
+<div id="mySidenav" class="sidenav">
+  <ul id="menu-v">
+    <li><a href="Home.html">Home</a>
+    </li><br>
+    <li><a href="Account.html">Account</a>
+    </li><br>
+    
+
+    <li><a href="Green.html">Go Green!</a>
+    </li><br>
+    <li><a href="Book.html">Book Now!</a>
+    </li><br>
+
+    <li><a href="Driver.html" style="    width: 141px;
+    height: 42px;
+    margin-left: -22px;">Want to be a driver?</a>
+    </li><br>
+
+<li><a href="" id="exit">Exit</a>
+    </li><br>
+        </ul>
+
+</div>
+<div id="menudiv">
+<!-- Use any element to open the sidenav -->
+<span id="sidemenu">Menu</span>
+</div>
+
+
+
+    <div class="dologin" style="    margin-top: 156px; margin-left: 167px;">
+
+                      <form id="loginForm" class="form-inline" style="margin-left: -105px;">
+        
+        <div >
+            <label for="email">Name:</label>
+            <input type="text" name="name" id="name" value="" placeholder="name" style="    margin-left: 40px;" />
+        </div>
+
+
+        <div >
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email" value="" placeholder="email" style="    margin-left: 38px;" />
+        </div>
+
+
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" value="" placeholder="Password" />
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick = "loginb()" style = "margin-left: 67px;
+    margin-top: 15px;"> Submit</button>
+        </form>
+                    
+          
+                </div>
+
+                <div id ="result" style = "    margin-left: 20px;
+    margin-top: 10px;">
+                </div>
+
+      </div>
+</body>
+
+<script type="text/javascript">
+
+window.loginb = function()
+{
+      
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    var name = document.getElementById("name").value;
+
+
+    var url         = "http://localhost/carpool/register.php";
+    var xmlhttp     = new XMLHttpRequest();
+    xmlhttp.onload = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+           var jsondata = xmlhttp.responseText;
+           var res = jsondata.split("!");
+           document.getElementById("result").innerHTML = res[1];
+            console.log(xmlhttp.responseText);
+            }
+    };
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+    xmlhttp.send("email="+email+"&password="+password+"&name="+name);
+
+
+
+  
+}
+
+        window.onload=function(){
+    var el = document.getElementById('sidemenu');
+    if(el){
+        el.addEventListener('click', openNav, false);
+        }
+
+    var le = document.getElementById('exit');
+    if(le){
+        le.addEventListener('click', closeNav, false);
+        }
+
+    
+
+
+
+}
+
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+    document.body.style.backgroundColor = "white";
+}
+
+
+</script>
+
+
+</html>
+
+
